@@ -4,6 +4,7 @@ const secondsDisplay = document.querySelector("#seconds");
 const playBtn = document.querySelector("#play");
 const stopBtn = document.querySelector("#stop");
 const addBtn = document.querySelector("#add");
+const subtractBtn = document.querySelector("#subtract");
 
 const timer = {
   minutes: 25,
@@ -14,6 +15,7 @@ const timer = {
 playBtn.addEventListener("click", startTimer);
 stopBtn.addEventListener("click", stopTimer);
 addBtn.addEventListener("click", addFiveMinutes);
+subtractBtn.addEventListener("click", subtractFiveMinutes);
 
 function startTimer() {
   playBtn.disabled = true;
@@ -40,6 +42,21 @@ function addFiveMinutes() {
   }
 
   timer.minutes += 5;
+  updateDisplay();
+}
+
+function subtractFiveMinutes() {
+  if (timer.intervalID !== null) {
+    console.log("Não é possível subtrair tempo com o timer funcionando");
+    return;
+  }
+
+  if (timer.minutes === 25) {
+    console.log("Não é possível subtrair um tempo menor que 25 minutos");
+    return;
+  }
+
+  timer.minutes -= 5;
   updateDisplay();
 }
 
