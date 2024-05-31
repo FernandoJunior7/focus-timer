@@ -2,6 +2,7 @@ const minutesDisplay = document.querySelector("#minutes");
 const secondsDisplay = document.querySelector("#seconds");
 
 const playBtn = document.querySelector("#play");
+const stopBtn = document.querySelector("#stop");
 
 const timer = {
   minutes: 25,
@@ -10,10 +11,20 @@ const timer = {
 };
 
 playBtn.addEventListener("click", startTimer);
+stopBtn.addEventListener("click", stopTimer);
 
 function startTimer() {
   playBtn.disabled = true;
   timer.intervalID = setInterval(countdown, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timer.intervalID);
+  timer.intervalID = null;
+  timer.minutes = 25;
+  timer.seconds = 0;
+  updateDisplay();
+  playBtn.disabled = false;
 }
 
 function countdown() {
@@ -27,7 +38,7 @@ function countdown() {
     return;
   }
 
-  if (timer.seconds === 0) {
+  if (timer.seconds <= 0) {
     timer.minutes--;
     timer.seconds = 59;
   }
