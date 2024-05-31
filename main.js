@@ -3,6 +3,7 @@ const secondsDisplay = document.querySelector("#seconds");
 
 const playBtn = document.querySelector("#play");
 const stopBtn = document.querySelector("#stop");
+const addBtn = document.querySelector("#add");
 
 const timer = {
   minutes: 25,
@@ -12,6 +13,7 @@ const timer = {
 
 playBtn.addEventListener("click", startTimer);
 stopBtn.addEventListener("click", stopTimer);
+addBtn.addEventListener("click", addFiveMinutes);
 
 function startTimer() {
   playBtn.disabled = true;
@@ -25,6 +27,20 @@ function stopTimer() {
   timer.seconds = 0;
   updateDisplay();
   playBtn.disabled = false;
+}
+
+function addFiveMinutes() {
+  if (timer.intervalID !== null) {
+    console.log("Não é possível adicionar tempo com o timer funcionando");
+    return;
+  }
+  if (timer.minutes === 60) {
+    console.log("Não é possível adicionar um tempo maior que 60 minutos");
+    return;
+  }
+
+  timer.minutes += 5;
+  updateDisplay();
 }
 
 function countdown() {
