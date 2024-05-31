@@ -7,15 +7,61 @@
 :root {
   font-size: 62.5%;
 
-  --bg-color: #333;
-  --color: #e7e7e7;
+  --bg-color: #e7e7e7;
+  --color: #333;
+
+  --hover-color: #87b6d9;
 }
 
 body {
   font-size: 1.6rem;
 
-  padding: 2.4rem;
-
   background-color: var(--bg-color);
   color: var(--color);
+}
+
+#app {
+  min-height: 100vh;
+
+  display: grid;
+  place-content: center;
+}
+
+#timer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.6rem;
+}
+
+#timer-display {
+  font-size: 12rem;
+  line-height: 0.9;
+
+  display: flex;
+  gap: 0.4rem;
+}
+
+#timer-buttons {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+#timer-buttons button {
+  background-color: transparent;
+  border: none;
+
+  transition: 0.5s;
+}
+
+#timer-buttons button:hover {
+  transform: scale(1.2);
+  color: var(--hover-color);
+}
+
+#timer-buttons button svg {
+  width: 4rem;
+  height: 4rem;
 }
