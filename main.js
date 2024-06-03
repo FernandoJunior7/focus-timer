@@ -2,6 +2,7 @@ const minutesDisplay = document.querySelector("#minutes");
 const secondsDisplay = document.querySelector("#seconds");
 
 const buttonPressAudio = new Audio("./assets/button-press.wav");
+const clockAlarmAudio = new Audio("./assets/clock-alarm.mp3");
 
 const playBtn = document.querySelector("#play");
 const stopBtn = document.querySelector("#stop");
@@ -72,10 +73,8 @@ function countdown() {
   timer.seconds--;
 
   if (timer.seconds === 0 && timer.minutes === 0) {
-    clearInterval(timer.intervalID);
-    timer.intervalID = null;
-    playBtn.disabled = false;
-    updateDisplay();
+    clockAlarmAudio.play();
+    stopTimer();
     return;
   }
 
@@ -88,6 +87,7 @@ function countdown() {
 }
 
 function updateDisplay() {
+  console.log(timer.minutes);
   minutesDisplay.textContent = String(timer.minutes).padStart(2, "0");
   secondsDisplay.textContent = String(timer.seconds).padStart(2, "0");
 }
