@@ -87,7 +87,8 @@ function countdown() {
 }
 
 function updateDisplay() {
-  console.log(timer.minutes);
   minutesDisplay.textContent = String(timer.minutes).padStart(2, "0");
   secondsDisplay.textContent = String(timer.seconds).padStart(2, "0");
 }
+
+updateDisplay();
