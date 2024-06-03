@@ -1,3 +1,5 @@
+const MINUTES_IN_MILISSECONDS = 60 * 1000;
+
 const minutesDisplay = document.querySelector("#minutes");
 const secondsDisplay = document.querySelector("#seconds");
 
@@ -12,6 +14,8 @@ const subtractBtn = document.querySelector("#subtract");
 const timer = {
   minutes: 25,
   seconds: 0,
+  startTime: null,
+  endTime: null,
   intervalID: null,
 };
 
@@ -23,23 +27,27 @@ subtractBtn.addEventListener("click", subtractFiveMinutes);
 function startTimer() {
   buttonPressAudio.play();
   playBtn.disabled = true;
-  timer.intervalID = setInterval(countdown, 1000);
+  timer.startTime = new Date(Date.now());
+  timer.endTime = new Date(
+    Date.now() + timer.minutes * MINUTES_IN_MILISSECONDS
+  );
+  timer.intervalID = setInterval(countdown, 990);
 }
 
 function stopTimer() {
   buttonPressAudio.play();
   clearInterval(timer.intervalID);
   timer.intervalID = null;
-  timer.minutes = 25;
-  timer.seconds = 0;
-  updateDisplay();
+  timer.startTime = null;
+  timer.endTime = null;
+  updateDisplay(timer.minutes);
   playBtn.disabled = false;
 }
 
 function addFiveMinutes() {
   buttonPressAudio.play();
 
-  if (timer.intervalID !== null) {
+  if (playBtn.disabled) {
     console.log("Não é possível adicionar tempo com o timer funcionando");
     return;
   }
@@ -49,13 +57,13 @@ function addFiveMinutes() {
   }
 
   timer.minutes += 5;
-  updateDisplay();
+  updateDisplay(timer.minutes);
 }
 
 function subtractFiveMinutes() {
   buttonPressAudio.play();
 
-  if (timer.intervalID !== null) {
+  if (playBtn.disabled) {
     console.log("Não é possível subtrair tempo com o timer funcionando");
     return;
   }
@@ -66,29 +74,32 @@ function subtractFiveMinutes() {
   }
 
   timer.minutes -= 5;
-  updateDisplay();
+  updateDisplay(timer.minutes);
 }
 
 function countdown() {
-  timer.seconds--;
-
-  if (timer.seconds === 0 && timer.minutes === 0) {
+  if (Date.now() >= timer.endTime) {
     clockAlarmAudio.play();
     stopTimer();
     return;
   }
 
-  if (timer.seconds <= 0) {
-    timer.minutes--;
-    timer.seconds = 59;
-  }
-
   updateDisplay();
 }
 
-function updateDisplay() {
-  minutesDisplay.textContent = String(timer.minutes).padStart(2, "0");
-  secondsDisplay.textContent = String(timer.seconds).padStart(2, "0");
+function updateDisplay(minute) {
+  if (minute !== undefined) {
+    minutesDisplay.textContent = String(timer.minutes).padStart(2, "0");
+    secondsDisplay.textContent = String(timer.seconds).padStart(2, "0");
+    return;
+  }
+
+  const minutes = new Date(timer.endTime - Date.now()).getMinutes();
+  const seconds = new Date(timer.endTime - Date.now()).getSeconds();
+  console.log(minutes);
+  console.log(seconds);
+  minutesDisplay.textContent = String(minutes).padStart(2, "0");
+  secondsDisplay.textContent = String(seconds).padStart(2, "0");
 }
 
-updateDisplay();
+updateDisplay(timer.minutes);
