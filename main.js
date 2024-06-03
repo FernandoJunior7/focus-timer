@@ -1,6 +1,8 @@
 const minutesDisplay = document.querySelector("#minutes");
 const secondsDisplay = document.querySelector("#seconds");
 
+const buttonPressAudio = new Audio("./assets/button-press.wav");
+
 const playBtn = document.querySelector("#play");
 const stopBtn = document.querySelector("#stop");
 const addBtn = document.querySelector("#add");
@@ -18,11 +20,13 @@ addBtn.addEventListener("click", addFiveMinutes);
 subtractBtn.addEventListener("click", subtractFiveMinutes);
 
 function startTimer() {
+  buttonPressAudio.play();
   playBtn.disabled = true;
   timer.intervalID = setInterval(countdown, 1000);
 }
 
 function stopTimer() {
+  buttonPressAudio.play();
   clearInterval(timer.intervalID);
   timer.intervalID = null;
   timer.minutes = 25;
@@ -32,6 +36,8 @@ function stopTimer() {
 }
 
 function addFiveMinutes() {
+  buttonPressAudio.play();
+
   if (timer.intervalID !== null) {
     console.log("Não é possível adicionar tempo com o timer funcionando");
     return;
@@ -46,6 +52,8 @@ function addFiveMinutes() {
 }
 
 function subtractFiveMinutes() {
+  buttonPressAudio.play();
+
   if (timer.intervalID !== null) {
     console.log("Não é possível subtrair tempo com o timer funcionando");
     return;
